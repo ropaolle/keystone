@@ -3,7 +3,9 @@ section: guides
 title: Relationship Migration Guide
 [meta]-->
 
-In the 7.0.0 (FIXME) release of `@keystonejs/keystone`, `@keystonejs/adapter-knex` and `@keystone/adapter-mongoose` we changed the database schema which Keystone uses to store its relationship data.
+# Relationship Migration Guide
+
+In the 7.0.0 (FIXME) release of `@keystonejs/keystone`, `@keystonejs/adapter-knex` and `@keystone/adapter-mongoose` we [changed the database schema] which Keystone uses to store its relationship data.
 
 This means that if you are upgrading to these new packages you will need to perform a migration on your database in order for it to continue working.
 
@@ -689,7 +691,7 @@ create index user_post_index
 -	on "Post" (author);
 ```
 
-## Migration Strategy
+### Migration Strategy
 
 One to one relationships in the `before` state had a foreign key column on each table.
 In the `after` state, only one of these is stored.
