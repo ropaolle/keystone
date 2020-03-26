@@ -54,34 +54,34 @@ keystone.createList('Post', {
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text
 );
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text
 );
 create table "Post_authors"
 (
-	"Post_id" integer not null
-		constraint post_authors_post_id_foreign
-			references "Post"
-				on delete cascade,
-	"User_id" integer not null
-		constraint post_authors_user_id_foreign
-			references "User"
-				on delete cascade
+  "Post_id" integer not null
+    constraint post_authors_post_id_foreign
+      references "Post"
+        on delete cascade,
+  "User_id" integer not null
+    constraint post_authors_user_id_foreign
+      references "User"
+        on delete cascade
 );
 create index post_authors_post_id_index
-	on "Post_authors" ("Post_id");
+  on "Post_authors" ("Post_id");
 create index post_authors_user_id_index
-	on "Post_authors" ("User_id");
+  on "Post_authors" ("User_id");
 ```
 
 <!-- #### Table data
@@ -109,34 +109,34 @@ create index post_authors_user_id_index
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text
 );
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text
 );
 create table "Post_authors_many"
 (
-	"Post_left_id" integer not null
-		constraint post_authors_many_post_left_id_foreign
-			references "Post"
-				on delete cascade,
-	"User_right_id" integer not null
-		constraint post_authors_many_user_right_id_foreign
-			references "User"
-				on delete cascade
+  "Post_left_id" integer not null
+    constraint post_authors_many_post_left_id_foreign
+      references "Post"
+        on delete cascade,
+  "User_right_id" integer not null
+    constraint post_authors_many_user_right_id_foreign
+      references "User"
+        on delete cascade
 );
 create index post_authors_many_post_left_id_index
-	on "Post_authors_many" ("Post_left_id");
+  on "Post_authors_many" ("Post_left_id");
 create index post_authors_many_user_right_id_index
-	on "Post_authors_many" ("User_right_id");
+  on "Post_authors_many" ("User_right_id");
 ```
 
 ### Schema diff
@@ -144,34 +144,34 @@ create index post_authors_many_user_right_id_index
 ```diff
 @@ -1,4 +1,3 @@
 @@ -13,19 +13,18 @@
- 	title text,
- 	content text
+   title text,
+   content text
  );
 -create table "Post_authors"
 +create table "Post_authors_many"
  (
--	"Post_id" integer not null
--		constraint post_authors_post_id_foreign
-+	"Post_left_id" integer not null
-+		constraint post_authors_many_post_left_id_foreign
- 			references "Post"
- 				on delete cascade,
--	"User_id" integer not null
--		constraint post_authors_user_id_foreign
-+	"User_right_id" integer not null
-+		constraint post_authors_many_user_right_id_foreign
- 			references "User"
- 				on delete cascade
+- "Post_id" integer not null
+-   constraint post_authors_post_id_foreign
++ "Post_left_id" integer not null
++   constraint post_authors_many_post_left_id_foreign
+       references "Post"
+         on delete cascade,
+- "User_id" integer not null
+-  constraint post_authors_user_id_foreign
++ "User_right_id" integer not null
++  constraint post_authors_many_user_right_id_foreign
+       references "User"
+         on delete cascade
  );
 -create index post_authors_post_id_index
--	on "Post_authors" ("Post_id");
+- on "Post_authors" ("Post_id");
 -create index post_authors_user_id_index
--	on "Post_authors" ("User_id");
+- on "Post_authors" ("User_id");
 -
 +create index post_authors_many_post_left_id_index
-+	on "Post_authors_many" ("Post_left_id");
++ on "Post_authors_many" ("Post_left_id");
 +create index post_authors_many_user_right_id_index
-+	on "Post_authors_many" ("User_right_id");
++ on "Post_authors_many" ("User_right_id");
 ```
 
 <!-- #### Table data
@@ -231,39 +231,39 @@ keystone.createList('Post', {
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text
 );
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text,
-	author integer
-		constraint post_author_foreign
-			references "User"
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text,
+  author integer
+    constraint post_author_foreign
+      references "User"
 );
 create index post_author_index
-	on "Post" (author);
+  on "Post" (author);
 create table "User_posts"
 (
-	"User_id" integer not null
-		constraint user_posts_user_id_foreign
-			references "User"
-				on delete cascade,
-	"Post_id" integer not null
-		constraint user_posts_post_id_foreign
-			references "Post"
-				on delete cascade
+  "User_id" integer not null
+    constraint user_posts_user_id_foreign
+      references "User"
+        on delete cascade,
+  "Post_id" integer not null
+    constraint user_posts_post_id_foreign
+      references "Post"
+        on delete cascade
 );
 create index user_posts_user_id_index
-	on "User_posts" ("User_id");
+  on "User_posts" ("User_id");
 create index user_posts_post_id_index
-	on "User_posts" ("Post_id");
+  on "User_posts" ("Post_id");
 ```
 
 <!-- ### Table data
@@ -291,24 +291,24 @@ create index user_posts_post_id_index
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text
 );
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text,
-	author integer
-		constraint post_author_foreign
-			references "User"
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text,
+  author integer
+    constraint post_author_foreign
+      references "User"
 );
 create index post_author_index
-	on "Post" (author);
+  on "Post" (author);
 ```
 
 ### Schema Diff
@@ -317,7 +317,7 @@ create index post_author_index
 @@ -18,18 +18,3 @@
  );
  create index post_author_index
- 	on "Post" (author);
+   on "Post" (author);
 -create table "User_posts"
 -(
 -	"User_id" integer not null
@@ -379,49 +379,49 @@ keystone.createList('Post', {
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text
 );
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text
 );
 create table "User_posts"
 (
-	"User_id" integer not null
-		constraint user_posts_user_id_foreign
-			references "User"
-				on delete cascade,
-	"Post_id" integer not null
-		constraint user_posts_post_id_foreign
-			references "Post"
-				on delete cascade
+  "User_id" integer not null
+    constraint user_posts_user_id_foreign
+      references "User"
+        on delete cascade,
+  "Post_id" integer not null
+    constraint user_posts_post_id_foreign
+      references "Post"
+        on delete cascade
 );
 create index user_posts_user_id_index
-	on "User_posts" ("User_id");
+  on "User_posts" ("User_id");
 create index user_posts_post_id_index
-	on "User_posts" ("Post_id");
+  on "User_posts" ("Post_id");
 create table "Post_authors"
 (
-	"Post_id" integer not null
-		constraint post_authors_post_id_foreign
-			references "Post"
-				on delete cascade,
-	"User_id" integer not null
-		constraint post_authors_user_id_foreign
-			references "User"
-				on delete cascade
+  "Post_id" integer not null
+    constraint post_authors_post_id_foreign
+      references "Post"
+        on delete cascade,
+  "User_id" integer not null
+    constraint post_authors_user_id_foreign
+      references "User"
+        on delete cascade
 );
 create index post_authors_post_id_index
-	on "Post_authors" ("Post_id");
+  on "Post_authors" ("Post_id");
 create index post_authors_user_id_index
-	on "Post_authors" ("User_id");
+  on "Post_authors" ("User_id");
 ```
 
 <!-- ### Table data
@@ -455,42 +455,42 @@ create index post_authors_user_id_index
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text
 );
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text
 );
 create table "User_posts_Post_authors"
 (
-	"User_left_id" integer not null
-		constraint user_posts_post_authors_user_left_id_foreign
-			references "User"
-				on delete cascade,
-	"Post_right_id" integer not null
-		constraint user_posts_post_authors_post_right_id_foreign
-			references "Post"
-				on delete cascade
+  "User_left_id" integer not null
+    constraint user_posts_post_authors_user_left_id_foreign
+      references "User"
+        on delete cascade,
+  "Post_right_id" integer not null
+    constraint user_posts_post_authors_post_right_id_foreign
+      references "Post"
+        on delete cascade
 );
 create index user_posts_post_authors_user_left_id_index
-	on "User_posts_Post_authors" ("User_left_id");
+  on "User_posts_Post_authors" ("User_left_id");
 create index user_posts_post_authors_post_right_id_index
-	on "User_posts_Post_authors" ("Post_right_id");
+  on "User_posts_Post_authors" ("Post_right_id");
 ```
 
 ### Schema diff
 
 ```diff
 @@ -13,33 +13,18 @@
- 	title text,
- 	content text
+   title text,
+   content text
  );
 -create table "User_posts"
 +create table "User_posts_Post_authors"
@@ -499,14 +499,14 @@ create index user_posts_post_authors_post_right_id_index
 -		constraint user_posts_user_id_foreign
 +	"User_left_id" integer not null
 +		constraint user_posts_post_authors_user_left_id_foreign
- 			references "User"
- 				on delete cascade,
+       references "User"
+         on delete cascade,
 -	"Post_id" integer not null
 -		constraint user_posts_post_id_foreign
 +	"Post_right_id" integer not null
 +		constraint user_posts_post_authors_post_right_id_foreign
- 			references "Post"
- 				on delete cascade
+       references "Post"
+         on delete cascade
  );
 -create index user_posts_user_id_index
 -	on "User_posts" ("User_id");
@@ -585,30 +585,30 @@ keystone.createList('Post', {
 ```sql
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text,
-	post integer
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text,
+  post integer
 );
 create index user_post_index
-	on "User" (post);
+  on "User" (post);
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text,
-	author integer
-		constraint post_author_foreign
-			references "User"
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text,
+  author integer
+    constraint post_author_foreign
+      references "User"
 );
 alter table "User"
-	add constraint user_post_foreign
-		foreign key (post) references "Post";
+  add constraint user_post_foreign
+    foreign key (post) references "Post";
 create index post_author_index
-	on "Post" (author);
+  on "Post" (author);
 ```
 
 <!-- ### Table data
@@ -630,24 +630,24 @@ create index post_author_index
 ```sql
 create table "Post"
 (
-	id serial not null
-		constraint "Post_pkey"
-			primary key,
-	title text,
-	content text
+  id serial not null
+    constraint "Post_pkey"
+      primary key,
+  title text,
+  content text
 );
 create table "User"
 (
-	id serial not null
-		constraint "User_pkey"
-			primary key,
-	name text,
-	post integer
-		constraint user_post_foreign
-			references "Post"
+  id serial not null
+    constraint "User_pkey"
+      primary key,
+  name text,
+  post integer
+    constraint user_post_foreign
+      references "Post"
 );
 create index user_post_index
-	on "User" (post);
+  on "User" (post);
 ```
 
 ### Schema diff
@@ -663,16 +663,16 @@ create index user_post_index
 +);
  create table "User"
  (
- 	id serial not null
+   id serial not null
 @@ -5,22 +13,8 @@
- 			primary key,
- 	name text,
- 	post integer
+       primary key,
+   name text,
+   post integer
 +		constraint user_post_foreign
 +			references "Post"
  );
  create index user_post_index
- 	on "User" (post);
+   on "User" (post);
 -create table "Post"
 -(
 -	id serial not null
@@ -682,7 +682,7 @@ create index user_post_index
 -	content text,
 -	author integer
 -		constraint post_author_foreign
--			references "User"
+-     references "User"
 -);
 -alter table "User"
 -	add constraint user_post_foreign
